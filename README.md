@@ -53,12 +53,12 @@ Considerando seu nível de conhecimento, faça até onde for possível no tempo 
 Não se preocupe se não der para acabar tudo, nós sabemos que o desafio é bastante complexo e queremos saber até onde você consegue se virar. 
 Então envie o que você conseguir.
 
-O que é obrigatório:
+1. O que é obrigatório:
 	•	Instruções para execução da aplicação no linux
 	•	Validações de dados
 	•	Legibilidade do código
 	•	Funcionamento da Aplicação (mesmo que parcial)
-O que é recomendável
+2. O que é recomendável
 	•	Clean Code
 	•	SOLID
 	•	Separation of Concerns
@@ -68,7 +68,7 @@ O que é recomendável
 	•	Testes
 	•	Padronização e Sintaxe do código
 	•	Inglês (código preferencialmente em inglês)
-Diferenciais:
+3. Diferenciais:
 	•	Logs
 	•	Segurança
 	•	Migrations
