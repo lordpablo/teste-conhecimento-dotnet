@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using SampleTest.Domain.Interfaces;
 using System.Linq.Expressions;
 using static Dapper.SqlMapper;
 
@@ -266,7 +267,5 @@ namespace SampleTest.Infrastructure.Repositories.Shared
             return count >= 0;
         }
         #endregion
-
-
     }
 }

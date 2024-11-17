@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,28 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Features\Client\Commands\.keep" />
-    <None Remove="Features\Client\Queries\.keep" />
     <None Remove="Features\User\Commands\.keep" />
-    <None Remove="Features\User\Queries\.keep" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Features\Client\Commands\.keep" />
-    <Compile Include="Features\Client\Queries\.keep" />
     <Compile Include="Features\User\Commands\.keep" />
-    <Compile Include="Features\User\Queries\.keep" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.36" />
     <PackageReference Include="Serilog" Version="4.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
+    <PackageReference Include="Swashbuckle.Examples" Version="4.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\SampleTest.Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\SampleTest.Infrastructure.csproj" />
+    <ProjectReference Include="..\Resources\SampleTest.Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Client\Commands\" />
+    <Folder Include="Features\Client\Queries\" />
+    <Folder Include="Features\User\Queries\" />
   </ItemGroup>
 
 </Project>

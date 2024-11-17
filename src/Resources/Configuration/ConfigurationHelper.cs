@@ -98,6 +98,7 @@ namespace SampleTest.Resources.Configuration
                         .AsImplementedInterfaces()
                         .WithScopedLifetime());
         }
+
         /// <summary>
         /// This method configureJwt on application
         /// </summary>

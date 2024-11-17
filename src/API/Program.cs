@@ -1,9 +1,15 @@
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SampleTest.Application.Configuration;
+using SampleTest.Domain.Interfaces;
 using SampleTest.Infrastructure.Context;
+using SampleTest.Infrastructure.Repositories;
 using SampleTest.Resources.Configuration;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("cnnBaseString").ToString();
@@ -24,8 +30,18 @@ builder.Services.AddScoped<DbContext, DefaultContext>();
 // Base configurantion
 ConfigurationHelper.ConfigureJwt(builder.Services, key);
 ConfigurationHelper.ConfigureSwaggerGen(builder.Services, "SampleTestAPI", "v1");
-ConfigurationHelper.ConfigureScrutor(builder.Services);
 ConfigurationHelper.ConfigureAuthenticateUser(builder.Services);
+
+builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(AutoMapperConfig));
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblyContaining(typeof(AutoMapperConfig));
+    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+});
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -33,7 +49,6 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 builder.Services.AddAutoMapperConfig();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -58,4 +73,4 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
-app.Run();
+await app.RunAsync();

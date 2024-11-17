@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace SampleTest.Infrastructure.Repositories.Shared
+namespace SampleTest.Domain.Interfaces
 {
     /// <summary>
     /// Interface for base repository

@@ -32,19 +32,6 @@ namespace SampleTest.Infrastructure.Context
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
 
-            //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            //{
-            //    foreach (var property in entityType.GetProperties())
-            //    {
-            //        if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
-            //        {
-            //            property.SetValueConverter(new ValueConverter<DateTime, DateTime>(
-            //                   v => DateTime.SpecifyKind(v.ToUniversalTime(), DateTimeKind.Utc), // Save UTC
-            //                   v => DateTime.SpecifyKind(v, DateTimeKind.Utc) // Read UTC
-            //               ));
-            //        }
-            //    }
-            //}
 
             //This defines UniqueFields on database
             modelBuilder.Entity<UserModel>().HasIndex(e => e.Username).IsUnique();

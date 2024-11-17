@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -70,7 +69,7 @@ namespace SampleTest.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "ClientId", "CreateUserId", "CreatedAt", "DeleteUserId", "DeletedAt", "IsDeleted", "Password", "UpdateUserId", "UpdatedAt", "Username" },
-                values: new object[] { 1, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "admin", null, null, "admin" });
+                values: new object[] { 1, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "e84477f9b95117589a0c8142cab2211f3c421fab5b85f3393784bc7f254545bc", null, null, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Client_CPF",

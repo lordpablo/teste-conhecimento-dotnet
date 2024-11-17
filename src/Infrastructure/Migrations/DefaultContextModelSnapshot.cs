@@ -149,7 +149,7 @@ namespace SampleTest.Infrastructure.Migrations
                             ClientId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Password = "admin",
+                            Password = "e84477f9b95117589a0c8142cab2211f3c421fab5b85f3393784bc7f254545bc",
                             Username = "admin"
                         });
                 });
