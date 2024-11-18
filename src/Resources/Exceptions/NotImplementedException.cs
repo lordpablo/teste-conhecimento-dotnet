@@ -1,10 +1,10 @@
-﻿namespace SampleTest.Application.Exceptions;
+﻿namespace SampleTest.Resources.Exceptions;
 
 public class NotImplementedException : Exception
 {
     public NotImplementedException(string error)
     {
-        this.Error = error;
+        Error = error;
     }
     public string Error { get; }
 }

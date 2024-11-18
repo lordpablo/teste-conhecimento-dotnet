@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using SampleTest.Domain.Mapper;
+using SampleTest.Application.Mapper;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SampleTest.Application.Configuration

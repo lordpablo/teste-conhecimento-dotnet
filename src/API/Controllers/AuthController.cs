@@ -6,7 +6,6 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace SampleTeste.API.Controllers
 {
-    [SwaggerTag("SampleModel Service")]
     [Route("api/auth")]
     [ApiController]
     public class AuthController : BaseController

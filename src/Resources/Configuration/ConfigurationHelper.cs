@@ -107,8 +107,7 @@ namespace SampleTest.Resources.Configuration
         [ExcludeFromCodeCoverage]
         public static void ConfigureJwt(IServiceCollection services, string secret)
         {
-            var keyByte = Encoding.Unicode.GetBytes(secret);
-            var key64 = Convert.ToBase64String(keyByte);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             services
                 .AddAuthorization()
@@ -124,7 +123,7 @@ namespace SampleTest.Resources.Configuration
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key64)),
+                        IssuerSigningKey = key,
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         LifetimeValidator = LifetimeValidator,

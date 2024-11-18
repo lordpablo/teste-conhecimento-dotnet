@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using SampleTest.Application.Exceptions;
 using SampleTest.Application.Shared;
 using SampleTest.Domain.Interfaces;
 using SampleTest.Domain.Models;
@@ -54,11 +53,7 @@ public class LoginCommandHandler : ICommandQueryHandler<LoginCommand, string>
         var secKey = _configuration.GetValue<string>("ApiSecretKey");
         var appOrigin = _configuration.GetValue<string>("ApplicationOrigin");
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var keyByte = Encoding.Unicode.GetBytes(secKey);
-        var key64 = Convert.ToBase64String(keyByte);
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key64));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secKey));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -68,13 +63,13 @@ public class LoginCommandHandler : ICommandQueryHandler<LoginCommand, string>
             new("user.name", user.Username),
             new("application.origin", appOrigin)
         }),
-            NotBefore = DateTime.UtcNow.AddMinutes(-10),
+            NotBefore = DateTime.UtcNow,
             Expires = DateTime.UtcNow.AddHours(2),
             SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         };
 
+        var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return tokenHandler.WriteToken(token);
     }
 }

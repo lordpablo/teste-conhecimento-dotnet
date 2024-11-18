@@ -19,6 +19,7 @@ namespace SampleTest.Domain.Models
         public string Email { get; set; }
         [Required]
         public GenderEnum Gender { get; set; }
-
+        [Required]
+        public double MonthRemuneration { get; set; } = 0;
     }
 }

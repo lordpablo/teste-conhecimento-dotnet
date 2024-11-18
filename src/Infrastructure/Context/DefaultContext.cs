@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SampleTest.Domain.Models;
 using SampleTest.Infrastructure.Context.Seeds;
 using System.Diagnostics.CodeAnalysis;
@@ -19,6 +20,7 @@ namespace SampleTest.Infrastructure.Context
         }
         public virtual DbSet<UserModel> Users { get; set; }
         public virtual DbSet<ClientModel> Clients { get; set; }
+        public virtual DbSet<AccountModel> Accounts { get; set; }
 
         [ExcludeFromCodeCoverage]
 
@@ -32,6 +34,19 @@ namespace SampleTest.Infrastructure.Context
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
 
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(new ValueConverter<DateTime, DateTime>(
+                               v => DateTime.SpecifyKind(v.ToUniversalTime(), DateTimeKind.Unspecified),
+                               v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified)
+                           ));
+                    }
+                }
+            }
 
             //This defines UniqueFields on database
             modelBuilder.Entity<UserModel>().HasIndex(e => e.Username).IsUnique();
@@ -40,6 +55,7 @@ namespace SampleTest.Infrastructure.Context
 
             //This is for add to migrations new data from the start only for tests.
             modelBuilder.Entity<ClientModel>().HasData(ClientSeeds.NewSeeds());
+            modelBuilder.Entity<AccountModel>().HasData(AccountSeeds.NewSeeds());
             modelBuilder.Entity<UserModel>().HasData(UserSeeds.NewSeeds());
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

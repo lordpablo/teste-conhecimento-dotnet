@@ -18,6 +18,7 @@ namespace SampleTest.Infrastructure.Context.Seeds
                     CreateUserId = null,
                     CreatedAt = new DateTime(2024,11,15,19,0,0,0),
                     IsDeleted = false,
+                    MonthRemuneration = 10000,
                 }
             };
         }

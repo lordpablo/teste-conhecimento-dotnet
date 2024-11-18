@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SampleTest.Infrastructure.Context;
@@ -11,9 +12,10 @@ using SampleTest.Infrastructure.Context;
 namespace SampleTest.Infrastructure.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20241117235207_AccountData")]
+    partial class AccountData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +31,6 @@ namespace SampleTest.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Agency")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<double>("Balance")
                         .HasColumnType("double precision");
@@ -74,10 +72,9 @@ namespace SampleTest.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Agency = "0001",
                             Balance = 0.0,
                             ClientId = 1,
-                            CreatedAt = new DateTime(2024, 11, 15, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 11, 15, 19, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Overdraft = 3000.0
                         });
@@ -147,9 +144,9 @@ namespace SampleTest.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            BirthDate = new DateTime(1990, 3, 3, 3, 0, 0, 0, DateTimeKind.Unspecified),
+                            BirthDate = new DateTime(1990, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CPF = "57289157010",
-                            CreatedAt = new DateTime(2024, 11, 15, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 11, 15, 19, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "pablohmsfa@gmail.com",
                             Gender = 0,
                             IsDeleted = false,
@@ -165,6 +162,9 @@ namespace SampleTest.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CreateUserId")
                         .HasColumnType("integer");
@@ -197,6 +197,8 @@ namespace SampleTest.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientId");
+
                     b.HasIndex("Username")
                         .IsUnique();
 
@@ -206,7 +208,8 @@ namespace SampleTest.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 2, 0, 0, 0, DateTimeKind.Unspecified),
+                            ClientId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Password = "e84477f9b95117589a0c8142cab2211f3c421fab5b85f3393784bc7f254545bc",
                             Username = "admin"
@@ -214,6 +217,17 @@ namespace SampleTest.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("SampleTest.Domain.Models.AccountModel", b =>
+                {
+                    b.HasOne("SampleTest.Domain.Models.ClientModel", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("SampleTest.Domain.Models.UserModel", b =>
                 {
                     b.HasOne("SampleTest.Domain.Models.ClientModel", "Client")
                         .WithMany()

@@ -33,6 +33,8 @@ ConfigurationHelper.ConfigureSwaggerGen(builder.Services, "SampleTestAPI", "v1")
 ConfigurationHelper.ConfigureAuthenticateUser(builder.Services);
 
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+builder.Services.AddScoped(typeof(IClientRepository), typeof(ClientRepository));
+builder.Services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
 
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(AutoMapperConfig));
 
@@ -51,6 +53,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddAutoMapperConfig();
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandler>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -67,6 +70,7 @@ app.UseCors(c =>
 app.UseRequestLocalization(new RequestLocalizationOptions().SetDefaultCulture("pt-BR"));
 app.UseRouting();
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseEndpoints(endpoints =>

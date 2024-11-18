@@ -32,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Client\Commands\" />
     <Folder Include="Features\Client\Queries\" />
     <Folder Include="Features\User\Queries\" />
   </ItemGroup>

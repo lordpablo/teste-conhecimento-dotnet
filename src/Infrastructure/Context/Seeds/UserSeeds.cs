@@ -10,9 +10,8 @@ namespace SampleTest.Infrastructure.Context.Seeds
             {
                 new() {
                     Id = 1,
-                    ClientId = 1,
                     Username = "admin",
-                    Password = "admin",
+                    Password = "e84477f9b95117589a0c8142cab2211f3c421fab5b85f3393784bc7f254545bc", //admin
                 }
             };
         }
